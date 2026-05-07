@@ -138,8 +138,11 @@ runs:
           "libcblas=3.9.0=35_*" \
           "liblapack=3.9.0=35_*"
 
-        # Fake presence of MI200-class accelerators
+        # Fake presence of MI325X-class accelerators
         echo "gfx942" | sudo tee /opt/rocm/bin/target.lst
+
+        # Add ROCm binaries to PATH
+        export PATH=/opt/rocm/bin:$PATH
 
         # Cleanup
         sudo apt-get -qq autoclean >/dev/null
