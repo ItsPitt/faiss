@@ -127,10 +127,17 @@ runs:
 
         sudo apt-get -qq update >/dev/null
         sudo apt-get -qq install -y rocm >/dev/null
-    - name: Add ROCm to PATH
+    - name: Add ROCm to PATH and loader search path
       if: inputs.rocm == 'ON'
       shell: bash
-      run: echo "/opt/rocm/bin" >> "$GITHUB_PATH"
+      run: |
+        echo "/opt/rocm/bin" >> "$GITHUB_PATH"
+        # Use ROCm's libhsa-runtime64 to avoid undefined symbol 'hsa_amd_memory_get_preferred_copy_engine'.
+        ROCM_LIBS="/opt/rocm/lib"
+        if [ -d /opt/rocm/lib64 ]; then
+          ROCM_LIBS="$ROCM_LIBS:/opt/rocm/lib64"
+        fi
+        echo "LD_LIBRARY_PATH=$ROCM_LIBS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
     - name: Pin BLAS/LAPACK versions
       if: inputs.rocm == 'ON'
       shell: bash
