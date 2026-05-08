@@ -138,6 +138,11 @@ runs:
           ROCM_LIBS="$ROCM_LIBS:/opt/rocm/lib64"
         fi
         echo "LD_LIBRARY_PATH=$ROCM_LIBS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
+        {
+          echo /opt/rocm/lib
+          [ -d /opt/rocm/lib64 ] && echo /opt/rocm/lib64
+        } | sudo tee /etc/ld.so.conf.d/00-rocm-faiss-ci.conf >/dev/null
+        sudo ldconfig
     - name: Pin BLAS/LAPACK versions
       if: inputs.rocm == 'ON'
       shell: bash
