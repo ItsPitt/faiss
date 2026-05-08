@@ -127,8 +127,10 @@ runs:
 
         sudo apt-get -qq update >/dev/null
         sudo apt-get -qq install -y rocm >/dev/null
-
-
+    - name: Add ROCm to PATH
+      if: inputs.rocm == 'ON'
+      shell: bash
+      run: echo "/opt/rocm/bin" >> "$GITHUB_PATH"
     - name: Pin BLAS/LAPACK versions
       if: inputs.rocm == 'ON'
       shell: bash
@@ -140,9 +142,6 @@ runs:
 
         # Fake presence of MI325X-class accelerators
         echo "gfx942" | sudo tee /opt/rocm/bin/target.lst
-
-        # Add ROCm binaries to PATH
-        export PATH=/opt/rocm/bin:$PATH
 
         # Cleanup
         sudo apt-get -qq autoclean >/dev/null
