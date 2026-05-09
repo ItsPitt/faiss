@@ -127,6 +127,8 @@ runs:
 
         sudo apt-get -qq update >/dev/null
         sudo apt-get -qq install -y rocm >/dev/null
+        # Ensure ROCR matches HIP
+        sudo apt-get -qq install -y --reinstall hsa-rocr 2>/dev/null || true
     - name: Add ROCm to PATH and loader search path
       if: inputs.rocm == 'ON'
       shell: bash
