@@ -127,14 +127,11 @@ runs:
 
         sudo apt-get -qq update >/dev/null
         sudo apt-get -qq install -y rocm >/dev/null
-        # Ensure ROCR matches HIP
-        sudo apt-get -qq install -y --reinstall hsa-rocr 2>/dev/null || true
     - name: Add ROCm to PATH and loader search path
       if: inputs.rocm == 'ON'
       shell: bash
       run: |
         echo "/opt/rocm/bin" >> "$GITHUB_PATH"
-        # Use ROCm's libhsa-runtime64 to avoid undefined symbol 'hsa_amd_memory_get_preferred_copy_engine'.
         ROCM_LIBS="/opt/rocm/lib"
         if [ -d /opt/rocm/lib ]; then
           ROCM_LIBS="$ROCM_LIBS:/opt/rocm/lib"
