@@ -4,11 +4,12 @@
 # LICENSE file in the root directory of this source tree.
 
 import faiss  # usort: skip
+import faiss.contrib.torch_utils  # usort: skip
+
 import torch  # usort: skip
 import unittest  # usort: skip
 import numpy as np  # usort: skip
 
-import faiss.contrib.torch_utils  # usort: skip
 from faiss.contrib import datasets
 from faiss.contrib.torch import clustering, quantization
 
