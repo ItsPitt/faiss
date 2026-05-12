@@ -256,6 +256,11 @@ runs:
         conda list --show-channel-urls
         pytest --junitxml=test-results/pytest/results.xml tests/test_*.py
         pytest --junitxml=test-results/pytest/results-torch.xml tests/torch_*.py
+    - name: ROCm torch debug (REMOVE THIS)
+      if: inputs.rocm == 'ON'
+      shell: bash
+      run: |
+        $CONDA/bin/python -c "import faiss; print('faiss', faiss.get_num_gpus()); import torch; torch.rand(1, device='cuda')"
     - name: Python tests (CPU + GPU)
       if: inputs.gpu == 'ON'
       shell: bash
