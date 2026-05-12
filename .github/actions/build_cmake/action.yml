@@ -133,8 +133,8 @@ runs:
       run: |
         echo "/opt/rocm/bin" >> "$GITHUB_PATH"
         ROCM_LIBS="/opt/rocm/lib"
-        if [ -d /opt/rocm/lib ]; then
-          ROCM_LIBS="$ROCM_LIBS:/opt/rocm/lib"
+        if [ -d /opt/rocm/lib64 ]; then
+          ROCM_LIBS="$ROCM_LIBS:/opt/rocm/lib64"
         fi
         echo "LD_LIBRARY_PATH=$ROCM_LIBS${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" >> "$GITHUB_ENV"
     - name: Pin BLAS/LAPACK versions
