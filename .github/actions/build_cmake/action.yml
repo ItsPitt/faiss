@@ -118,7 +118,7 @@ runs:
         UBUNTU_VERSION_NAME=`cat /etc/os-release | grep UBUNTU_CODENAME | awk -F= '{print $2}'`
 
         # Set ROCm version
-        ROCM_VERSION="7.2"
+        ROCM_VERSION="7.1"
 
         sudo mkdir -p /etc/apt/keyrings
         wget -qO /tmp/rocm.gpg.key https://repo.radeon.com/rocm/rocm.gpg.key
@@ -244,7 +244,7 @@ runs:
       run: |
         conda list --show-channel-urls
         conda install -y -q "pip<26"
-        pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.2
+        pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm7.1
     - name: Python tests (CPU only)
       if: inputs.gpu == 'OFF' && inputs.metal != 'ON'
       shell: bash
